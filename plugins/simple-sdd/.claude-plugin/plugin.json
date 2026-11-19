@@ -1,0 +1,19 @@
+{
+  "name": "simple-sdd",
+  "version": "0.1.0",
+  "description": "Spec-Driven Development 흐름: grilling으로 결정을 확정한 뒤 spec, plan, tasks 문서를 차례로 만들고 task 단위로 구현한다.",
+  "author": {
+    "name": "moon-times",
+    "url": "https://github.com/moon-times"
+  },
+  "keywords": [
+    "sdd",
+    "spec",
+    "plan",
+    "tasks",
+    "grilling"
+  ],
+  "homepage": "https://github.com/moon-times/simple-ssd-plugin",
+  "repository": "https://github.com/moon-times/simple-ssd-plugin",
+  "license": "MIT"
+}

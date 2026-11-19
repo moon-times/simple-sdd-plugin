@@ -1,0 +1,26 @@
+{
+  "name": "moon-times",
+  "owner": {
+    "name": "moon-times",
+    "url": "https://github.com/moon-times"
+  },
+  "metadata": {
+    "description": "moon-times의 Claude Code 플러그인"
+  },
+  "plugins": [
+    {
+      "name": "simple-sdd",
+      "source": "./plugins/simple-sdd",
+      "description": "Spec-Driven Development 흐름: grilling으로 결정을 확정한 뒤 spec, plan, tasks 문서를 차례로 만들고 task 단위로 구현한다.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "keywords": [
+        "sdd",
+        "spec",
+        "plan",
+        "tasks",
+        "grilling"
+      ]
+    }
+  ]
+}
