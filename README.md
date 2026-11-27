@@ -7,7 +7,7 @@ Claude Code용 Spec-Driven Development 플러그인입니다. 질문 라운드(g
 Claude Code 안에서 아래 두 줄을 입력하세요.
 
 ```
-/plugin marketplace add moon-times/simple-ssd-plugin
+/plugin marketplace add moon-times/simple-sdd-plugin
 /plugin install simple-sdd@moon-times
 ```
 
