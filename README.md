@@ -28,7 +28,9 @@ Claude Code 안에서 아래 두 줄을 입력하세요.
 | 중단한 곳부터 | "001-inventory-sort SDD 이어서 해줘" |
 | 구현 | "T-01 구현해줘", "다음 task 진행해줘" |
 
-문서는 프로젝트 안 `specs/NNN-기능명/` 폴더에 `decisions.md`, `spec.md`, `plan.md`, `tasks.md`로 쌓입니다.
+문서는 프로젝트 안 `specs/NNN-기능명/` 폴더에 `decisions.md`, `spec.md`, `plan.md`, `tasks.md`로 쌓입니다. `specs/update-hub.md`가 모든 기능의 설명·상태·코드 경로를 한곳에 모으고, 처음 실행할 때 프로젝트 `CLAUDE.md`에 "hub부터 읽고 관련 명세만 읽기" 규칙을 추가합니다.
+
+PC에 Obsidian이 설치돼 있으면 Obsidian 모드로 만듭니다. 프로젝트 안에 vault가 있으면 그 안의 `specs/`에, 없으면 `docs/specs/`에 frontmatter를 붙인 문서를 만듭니다.
 
 ### 팁
 

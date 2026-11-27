@@ -5,7 +5,7 @@ description: >
   This skill should be used when the `sdd` skill reaches step 2, or when the user asks
   "spec 만들어줘", "spec.md 작성해줘", "요구사항 문서 만들어줘", "명세서 써줘" for a feature in specs/.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # spec.md 작성
@@ -14,7 +14,7 @@ spec.md answers **what** to build and **why**. It contains no technology, librar
 
 ## 입력
 
-1. Locate the feature folder (`specs/NNN-<slug>/`). If none is given and several exist, ask which one.
+1. Locate the feature folder in the specs root (the folder holding `update-hub.md`; `specs/` when there is none). If none is given and several exist, ask which one. The 문서 모드 is **Obsidian** when `update-hub.md` starts with YAML frontmatter, otherwise **일반**. Write the document's top and links by the `sdd` skill's "문서 머리말" section (`../sdd/SKILL.md`): in Obsidian 모드 the `> 근거 | 작성일` line below becomes frontmatter.
 2. Read `decisions.md`. If it does not exist:
    - When the user supplied requirements in the conversation, offer to run `grilling` first (recommended). If they decline, write `spec.md` from what they supplied and mark every gap `[확인 필요]`.
 3. If `spec.md` already exists, update it in place instead of rewriting; preserve existing IDs.
@@ -24,7 +24,7 @@ spec.md answers **what** to build and **why**. It contains no technology, librar
 ```markdown
 # Spec: <feature name>
 
-> 근거: decisions.md | 상태: 초안 | 작성일: YYYY-MM-DD
+> 근거: decisions.md | 작성일: YYYY-MM-DD
 
 ## 1. 배경 / 문제
 <why this is needed, whose problem it is>
@@ -58,7 +58,7 @@ spec.md answers **what** to build and **why**. It contains no technology, librar
 - 가정: <assumed true; each must trace to a decision or confirmed fact>
 
 ## 9. 미결 사항
-- [확인 필요] <question> (관련: FR-03)
+- [확인 필요] <question> (관련: FR-03)   ← Obsidian 모드: `> [!question] [확인 필요] <question> (관련: FR-03)`
 ```
 
 ## 작성 규칙
@@ -80,4 +80,4 @@ spec.md answers **what** to build and **why**. It contains no technology, librar
 
 ## 출력
 
-Save `spec.md`, then report: FR/NFR count, and the 미결 사항 list as numbered questions with a recommended answer each. When there are none, say so in one line. When invoked from `sdd`, return to it.
+Save `spec.md` and, if the hub exists, add the spec link to the feature's entry. Then report: FR/NFR count, and the 미결 사항 list as numbered questions with a recommended answer each. When there are none, say so in one line. When invoked from `sdd`, return to it.

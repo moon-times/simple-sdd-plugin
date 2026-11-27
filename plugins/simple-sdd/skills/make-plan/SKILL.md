@@ -5,7 +5,7 @@ description: >
   This skill should be used when the `sdd` skill reaches step 3, or when the user asks
   "plan 만들어줘", "plan.md 작성해줘", "구현 계획 세워줘", "설계 문서 써줘" for a feature in specs/.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # plan.md 작성
@@ -14,7 +14,7 @@ plan.md answers **how** to build what spec.md defines. It adds no new features.
 
 ## 입력
 
-1. Locate the feature folder and read `spec.md` and `decisions.md`.
+1. Locate the feature folder in the specs root (the folder holding `update-hub.md`; `specs/` when there is none) and read `spec.md` and `decisions.md`. The 문서 모드 is **Obsidian** when `update-hub.md` starts with YAML frontmatter, otherwise **일반**. Write the document's top and links by the `sdd` skill's "문서 머리말" section (`../sdd/SKILL.md`): in Obsidian 모드 the `> 근거 | 작성일` line below becomes frontmatter.
 2. If `spec.md` is missing, stop and tell the user to run `make-spec` (or `sdd`) first.
 3. If `spec.md` still has `[확인 필요]` items, ask them first (numbered, with a recommended answer each) and update spec.md. Do not plan around open questions.
 4. Explore the existing codebase before choosing anything: directory layout, language and framework versions, existing patterns for similar features, test setup, lint/build commands. Use a sub-agent for wide searches. Prefer the project's existing conventions over new ones; a new dependency needs a reason in 기술 선택.
@@ -24,7 +24,7 @@ plan.md answers **how** to build what spec.md defines. It adds no new features.
 ```markdown
 # Plan: <feature name>
 
-> 근거: spec.md | 상태: 초안 | 작성일: YYYY-MM-DD
+> 근거: spec.md | 작성일: YYYY-MM-DD
 
 ## 1. 아키텍처 개요
 <components and data flow; a mermaid diagram if it helps>
@@ -85,4 +85,4 @@ plan.md answers **how** to build what spec.md defines. It adds no new features.
 
 ## 출력
 
-Save `plan.md`, then report: the 기술 선택 table, the Phase list (one line each), and any FR/NFR that could not be mapped. When invoked from `sdd`, return to it for checkpoint C.
+Save `plan.md`. If the hub exists, set the feature's `코드:` line from 3. 파일 / 모듈 구조 (directories or globs, not every file). Then report: the 기술 선택 table, the Phase list (one line each), and any FR/NFR that could not be mapped. When invoked from `sdd`, return to it for checkpoint C.

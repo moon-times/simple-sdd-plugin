@@ -5,7 +5,7 @@ description: >
   This skill should be used when the `sdd` skill reaches step 4, or when the user asks
   "tasks 만들어줘", "tasks.md 작성해줘", "작업 목록으로 쪼개줘", "태스크 분해해줘" for a feature in specs/.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # tasks.md 작성
@@ -14,7 +14,7 @@ tasks.md lists **what to do, in what order**. Each task is small enough for one 
 
 ## 입력
 
-1. Locate the feature folder and read `plan.md` and `spec.md`.
+1. Locate the feature folder in the specs root (the folder holding `update-hub.md`; `specs/` when there is none) and read `plan.md` and `spec.md`. The 문서 모드 is **Obsidian** when `update-hub.md` starts with YAML frontmatter, otherwise **일반**. Write the document's top and links by the `sdd` skill's "문서 머리말" section (`../sdd/SKILL.md`): in Obsidian 모드 the `> 근거 | 작성일` line below becomes frontmatter.
 2. If `plan.md` is missing, stop and tell the user to run `make-plan` (or `sdd`) first.
 3. If `tasks.md` already exists, update it in place: keep checked tasks and existing IDs, append new tasks with new IDs.
 

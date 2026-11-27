@@ -33,7 +33,7 @@ The session is done when the frontier is empty: every branch of the design tree 
 
 Apply this section only when grilling runs as step 1 of the `sdd` skill (the `sdd` skill names the feature folder, e.g. `specs/003-user-login/`). When grilling is used on its own, ignore this section and stop as above.
 
-Once the user confirms shared understanding, write `<feature folder>/decisions.md` in the user's language, then hand control back to the `sdd` skill. Record only what the user decided or confirmed; never add a decision the user did not make.
+Once the user confirms shared understanding, write `<feature folder>/decisions.md` in the user's language, then hand control back to the `sdd` skill. In Obsidian 모드 (the `sdd` skill says which), start the file with the frontmatter from its "문서 머리말" section (`type: decisions`). Record only what the user decided or confirmed; never add a decision the user did not make.
 
 ```markdown
 # Decisions: <feature name>
