@@ -6,7 +6,7 @@ description: >
   "spec plan task 만들어줘", "이 기능 설계하자", "/simple-sdd:sdd", or asks to resume an SDD flow
   ("SDD 이어서 해줘", "다음 단계 진행해줘") for a feature under specs/.
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Simple SDD 진행
@@ -40,8 +40,8 @@ Run the four design steps in order, keeping each step's output in a file so late
    When the hub does not exist yet, create it from the template under "update-hub.md" below.
 3. If the project root's `CLAUDE.md` has no `## 명세 읽는 순서` section, append the section under "CLAUDE.md 섹션" below (create `CLAUDE.md` with only that section if there is none). Tell the user in one line.
 4. Decide whether this is a new feature or a resume:
-   - **Resume**: the user names an existing feature, or a folder or hub entry matches the request. Check which of the four files exist and start from the first missing step. Tell the user in one line which step it resumes from.
-   - **New**: take the highest `NNN` prefix in the specs root + 1 (start at `001`), and create `NNN-<feature-slug>/` with a short English kebab-case slug (e.g. `003-user-login`). Add its hub entry (상태 `설계중`, a one-line description from the request). State the folder name in one line.
+   - **Resume**: the user names an existing feature, or a folder or hub entry matches the request. Check which of the four files exist and start from the first missing step. Tell the user in one line which step it resumes from. If the feature's branch (`feat/NNN-<feature-slug>`) exists and is not checked out, switch to it.
+   - **New**: take the highest `NNN` prefix in the specs root + 1 (start at `001`), and create `NNN-<feature-slug>/` with a short English kebab-case slug (e.g. `003-user-login`). Before creating any file, create and switch to the branch `feat/NNN-<feature-slug>` from the current branch (see "브랜치 / 커밋 / push" below). Add its hub entry (상태 `설계중`, a one-line description from the request). State the folder and branch names in one line.
 5. Read the 진행 방식 from the request:
    - **기본** (default): stop at the checkpoints below.
    - **자동**: the user said "자동", "auto", "끝까지 한 번에", or similar. Skip checkpoints B and C, but still stop at checkpoint A and whenever a step reports open questions.
@@ -63,7 +63,8 @@ Invoke the `make-spec` skill.
 
 Invoke the `make-plan` skill.
 
-- **Checkpoint C (기본)**: show the technology choices, the Phase list, and the FR→Phase mapping table, then ask: "이 계획으로 tasks를 만들까요?" Wait for the answer. Apply requested changes to `plan.md` before step 4.
+- If make-plan reports `[확인 필요]` 경계 케이스, ask them as one numbered round (with a recommended answer each) and update `plan.md` with the answers.
+- **Checkpoint C (기본)**: show the technology choices, the Phase list, the FR→Phase mapping table, and the 경계 케이스 table, then ask: "이 계획으로 tasks를 만들까요?" Wait for the answer. Apply requested changes to `plan.md` before step 4.
 
 ## 4. make-tasks → tasks.md
 
@@ -71,12 +72,30 @@ Invoke the `make-tasks` skill.
 
 ## 5. 마무리
 
+Commit the feature folder, the hub, and `CLAUDE.md` (if this run changed it) as one commit: `NNN-<feature-slug>: 설계 문서`. Do not push; the first push happens when Phase 1 is done.
+
 Report briefly:
 - the feature folder path and the four files
 - task count by Phase, and which tasks can start right away (no unmet dependencies)
 - the next action: "`implement-task`로 T-01부터 구현할 수 있어요 (예: 'T-01 구현해줘')."
 
 Do not start implementing in this skill.
+
+## 브랜치 / 커밋 / push
+
+One feature lives on one branch. `implement-task` follows the same rules.
+
+| 시점 | 동작 |
+|------|------|
+| 새 기능 시작 (sdd 0단계) | `feat/NNN-<feature-slug>` 브랜치 생성 후 전환 |
+| 설계 완료 (sdd 5단계) | 설계 문서 커밋 `NNN-<feature-slug>: 설계 문서` |
+| task 완료 (완료 조건 통과) | task 하나당 커밋 `T-03: <작업 제목>` (코드 + 문서 변경) |
+| Phase 완료 (리뷰 통과, 미완료 작업 없음) | `git push` (첫 push는 `git push -u origin <branch>`) |
+
+- Not a git repository: skip every rule here and say so once.
+- Uncommitted changes when a branch must be created or switched: stop and ask the user (commit, stash, or carry them over). Never stash or discard on your own.
+- No remote, or a push fails: report it and continue; never force-push, and never push to the default branch.
+- Merging the branch is the user's call; no skill merges or opens a PR.
 
 ## 문서 머리말
 

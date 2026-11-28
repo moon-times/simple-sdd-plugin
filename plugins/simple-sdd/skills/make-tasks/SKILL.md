@@ -5,7 +5,7 @@ description: >
   This skill should be used when the `sdd` skill reaches step 4, or when the user asks
   "tasks 만들어줘", "tasks.md 작성해줘", "작업 목록으로 쪼개줘", "태스크 분해해줘" for a feature in specs/.
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # tasks.md 작성
@@ -34,6 +34,7 @@ tasks.md lists **what to do, in what order**. Each task is small enough for one 
   - 내용: <what to do, 1-3 lines>
   - 완료 조건: <verifiable check>
   - 의존: 없음
+  - 넘김: `findUser(email: string): User | null`
 
 - [ ] T-02 <title>
   - 관련: FR-03
@@ -41,6 +42,7 @@ tasks.md lists **what to do, in what order**. Each task is small enough for one 
   - 내용: ...
   - 완료 조건: ...
   - 의존: T-01
+  - 받음: `findUser(email: string): User | null` (T-01)
 
 ## P2 <phase name>
 ...
@@ -59,6 +61,8 @@ tasks.md lists **what to do, in what order**. Each task is small enough for one 
 - **순서**: tasks within a Phase are listed in dependency order. A task depends only on earlier task IDs. The last task of each Phase verifies the Phase 완료 조건 from plan.md.
 - **[P]** only when the task shares no files and no unmet dependency with other [P] tasks in the same Phase.
 - **관련** cites FR/NFR IDs. Setup/refactor tasks with no direct requirement cite the Phase instead (관련: P1 준비).
+- **넘김 / 받음**: when a later task uses something this task creates (a function, type, API, table, event), write it in this task's 넘김 and the later task's 받음 (with the source task ID), with the exact name and signature from plan.md "4. 데이터 모델 / 인터페이스". Omit both lines when a task shares nothing with others.
+- **경계 케이스**: every row of plan.md's 경계 케이스 table appears in the 완료 조건 of a task in its Phase.
 - Paths and commands come from plan.md and the real codebase.
 - Introduce nothing that plan.md does not contain. If a needed step is missing from the plan, add it to plan.md's 변경 기록 and the relevant section first, then create the task.
 
@@ -68,6 +72,8 @@ tasks.md lists **what to do, in what order**. Each task is small enough for one 
 - [ ] 모든 작업에 검증 가능한 완료 조건이 있다
 - [ ] 의존 관계에 순환이 없고, 앞선 ID만 참조한다
 - [ ] 각 Phase 마지막 작업이 plan의 Phase 완료 조건을 확인한다
+- [ ] 모든 받음에 같은 이름과 시그니처의 넘김이 앞선 작업에 있다
+- [ ] plan의 모든 경계 케이스가 어떤 작업의 완료 조건에 들어 있다
 
 ## 출력
 

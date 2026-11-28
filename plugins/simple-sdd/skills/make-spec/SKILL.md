@@ -5,7 +5,7 @@ description: >
   This skill should be used when the `sdd` skill reaches step 2, or when the user asks
   "spec 만들어줘", "spec.md 작성해줘", "요구사항 문서 만들어줘", "명세서 써줘" for a feature in specs/.
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # spec.md 작성
@@ -77,6 +77,19 @@ spec.md answers **what** to build and **why**. It contains no technology, librar
 - [ ] 비목표가 비어 있지 않다
 - [ ] 구현 방법(기술, 파일, 라이브러리)이 섞이지 않았다
 - [ ] decisions.md의 모든 결정이 spec 어딘가에 반영되었다 (반영할 필요 없는 결정은 제외 이유를 한 줄로)
+
+## 빌더 점검 (자가 점검 후)
+
+Your own check cannot see gaps you filled from the conversation. Dispatch a fresh sub-agent with this prompt, giving it only the two file paths:
+
+> You will build this feature from `<spec.md path>` alone; `<decisions.md path>` holds the decisions behind it. Read both. List every question whose answer would change **what** gets built: behaviour the spec leaves unsaid, scenarios with no acceptance criterion, requirements that contradict each other or the decisions. Skip questions about technology or code structure; those are decided later. For each question, quote the line it comes from. Return only the numbered list, or "질문 없음".
+
+Sort what comes back:
+- **Answered by decisions.md or a confirmed fact**: write the answer into the spec, citing its source.
+- **About how, not what**: drop it (plan.md decides it).
+- **Everything else**: add it to 미결 사항 as `[확인 필요]`. Never settle it yourself.
+
+Without a sub-agent tool, read the spec once as that builder yourself.
 
 ## 출력
 

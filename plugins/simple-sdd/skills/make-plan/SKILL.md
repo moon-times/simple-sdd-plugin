@@ -5,7 +5,7 @@ description: >
   This skill should be used when the `sdd` skill reaches step 3, or when the user asks
   "plan 만들어줘", "plan.md 작성해줘", "구현 계획 세워줘", "설계 문서 써줘" for a feature in specs/.
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # plan.md 작성
@@ -58,6 +58,11 @@ plan.md answers **how** to build what spec.md defines. It adds no new features.
 - 단위: <what>  / 통합: <what> / 수동 확인: <what>
 - 실행 명령: `<test command found in the project>`
 
+### 경계 케이스
+| 입력 / 상황 | 기대 동작 | 근거 | Phase |
+|------------|----------|------|-------|
+| <e.g. 빈 제목으로 저장> | <e.g. 저장 안 됨, 오류 문구 표시> | FR-02 | P1 |
+
 ## 8. 리스크
 | 리스크 | 영향 | 대응 |
 |-------|------|------|
@@ -74,6 +79,7 @@ plan.md answers **how** to build what spec.md defines. It adds no new features.
 - Every FR and NFR appears in the 요구사항 매핑 table exactly once as primary owner. An NFR that spans phases goes to the phase where it is verified.
 - Choices the user should weigh (new dependency, data model shape, public API shape, anything costly to reverse) are flagged in 기술 선택 so the checkpoint can surface them.
 - Use real paths and commands found in the codebase, not placeholders.
+- **경계 케이스**: list up to five inputs or conditions this feature will meet that no 수용 기준 covers (empty, duplicate, very large, interrupted, concurrent, invalid...), most likely to bite a user first. Each row's 기대 동작 must come from the spec, a decision, or a confirmed fact, cited in 근거. When none of those settles it, do not guess: write `[확인 필요]` in 기대 동작 and ask it at the checkpoint with a recommended answer. An empty table means you checked and found none.
 
 ## 자가 점검 (저장 전)
 
@@ -82,7 +88,8 @@ plan.md answers **how** to build what spec.md defines. It adds no new features.
 - [ ] 모든 기술 선택에 이유와 대안이 있다
 - [ ] 모든 Phase에 검증 가능한 완료 조건이 있다
 - [ ] 파일 경로와 명령어가 실제 프로젝트 기준이다
+- [ ] 경계 케이스를 확인했고, 모든 행에 근거나 `[확인 필요]`가 있다
 
 ## 출력
 
-Save `plan.md`. If the hub exists, set the feature's `코드:` line from 3. 파일 / 모듈 구조 (directories or globs, not every file). Then report: the 기술 선택 table, the Phase list (one line each), and any FR/NFR that could not be mapped. When invoked from `sdd`, return to it for checkpoint C.
+Save `plan.md`. If the hub exists, set the feature's `코드:` line from 3. 파일 / 모듈 구조 (directories or globs, not every file). Then report: the 기술 선택 table, the Phase list (one line each), the 경계 케이스 table, any `[확인 필요]` 경계 케이스 as numbered questions with a recommended answer each, and any FR/NFR that could not be mapped. When invoked from `sdd`, return to it for checkpoint C.
